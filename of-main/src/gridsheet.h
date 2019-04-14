@@ -2,6 +2,8 @@
 #define GRIDSHEET_H
 #include "ofMain.h"
 #include "gridnode.h"
+#include "test.h"
+#include "langinterpreter.h"
 #define PORT 57120
 #define HOST "localhost"
 
@@ -27,6 +29,8 @@ private:
     string symbols;
     string chars_;
     vector<string> gridstate;
+    LangInterpreter interpreter;
+    test tester;
 };
 
 #endif // GRIDSHEET_H

@@ -16,11 +16,11 @@ Project{
             "src/gridnode.h",
             "src/gridsheet.cpp",
             "src/gridsheet.h",
-            "src/interpreter.cpp",
-            "src/interpreter.h",
-            'src/main.cpp',
-            'src/ofApp.cpp',
-            'src/ofApp.h',
+            "src/langinterpreter.cpp",
+            "src/langinterpreter.h",
+            "src/main.cpp",
+            "src/ofApp.cpp",
+            "src/ofApp.h",
         ]
 
         of.addons: [

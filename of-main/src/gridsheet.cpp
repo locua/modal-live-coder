@@ -120,4 +120,6 @@ void Gridsheet::update()
         gridnodes[i]->update(activeNode);
         gridstate[i] = gridnodes[i]->getsymboli();
     }
+
+    //interpreter.update();
 }
