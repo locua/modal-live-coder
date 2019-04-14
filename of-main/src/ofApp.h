@@ -28,6 +28,7 @@ public:
     // interface control stuff
     Gridsheet grid;
     ofTrueTypeFont font;
+    string chars =  string("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVB NM1234567890");
 
     // ofxmaxim stuff
     int sampleRate;
@@ -57,4 +58,5 @@ public:
 
     std::vector<int> hit, snarehit, highhit, basshit;
     int currentCount,lastCount,playHead;
+
 };

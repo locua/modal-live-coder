@@ -25,6 +25,7 @@ private:
     ofxOscSender sender;
     ofTrueTypeFont font;
     string symbols;
+    string chars_;
 };
 
 #endif // GRIDSHEET_H

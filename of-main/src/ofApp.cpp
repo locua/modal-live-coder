@@ -95,13 +95,25 @@ void ofApp::audioOut(ofSoundBuffer& buffer)
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+
     grid.navigate(key);
 
     if(key=='k') kicktrigger=1;
-    if(key=='b') basstrigger=1; cout << "bass" << endl;
+    if(key=='b') basstrigger=1;
     if(key=='s') synthtrigger=1;
 
 }
+
+//string AsciiIntToString( std::vector<int> const& ascii_ints )
+//{
+//    string ret_val;
+//    vector<int>:: const_iterator it = ascii_ints. begin ();
+//    for ( ; it != ascii_ints. end (); ++it ) {
+//        if ( *it < 0 || *it > 255) throw std::exception ("Invalid ASCII code");
+//        ret_val += static_cast<char>(*it);
+//    }
+//    return ret_val;
+//}
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){

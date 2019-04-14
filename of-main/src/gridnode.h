@@ -13,6 +13,7 @@ public:
     void draw(float, float);
     void update(int activeNode);
     void receiveFont(ofTrueTypeFont);
+    void changesymbol(int);
     //void getsymbols(string&);
 private:
     bool nodeActive;

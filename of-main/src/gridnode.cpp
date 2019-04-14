@@ -16,6 +16,12 @@ ofxOscMessage Gridnode::returnMessage()
     return m;
 }
 
+void Gridnode::changesymbol(int key)
+{
+    //cout << char(key) << endl;
+    symboli = char(key);
+}
+
 void Gridnode::activate()
 {
     nodeActive = true;

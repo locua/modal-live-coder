@@ -11,8 +11,8 @@ Gridsheet::Gridsheet()
     numNodes = cols*rows;
     activeNode = 0;
     font.load("arial.ttf", 10);
-    symbols =  string("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVB NM1234567890");
-
+    chars_ =  string("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVB NM1234567890");
+    symbols = string("+");
     // initialise gridnodes
     for(int i = 0; i < numNodes; ++i)
     {
@@ -92,6 +92,11 @@ void Gridsheet::navigate(int key)
         sender.sendMessage(message0, false);
     }
 //    cout << key << endl;
+    if(key!=57359 || key!=57357 || key!=57358 || key!=57356)
+    {
+        gridnodes[activeNode]->changesymbol(key);
+        cout << char(key) << endl;
+    }
 }
 
 
