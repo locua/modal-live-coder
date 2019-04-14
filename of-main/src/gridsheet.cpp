@@ -121,5 +121,5 @@ void Gridsheet::update()
         gridstate[i] = gridnodes[i]->getsymboli();
     }
 
-    //interpreter.update();
+    interpreter.update(gridstate);
 }

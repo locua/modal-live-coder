@@ -18,6 +18,8 @@ Project{
             "src/gridsheet.h",
             "src/langinterpreter.cpp",
             "src/langinterpreter.h",
+            "src/language.cpp",
+            "src/language.h",
             "src/main.cpp",
             "src/ofApp.cpp",
             "src/ofApp.h",

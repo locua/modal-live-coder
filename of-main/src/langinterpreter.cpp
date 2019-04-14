@@ -21,10 +21,12 @@ void LangInterpreter::parser()
    }
 }
 
-void LangInterpreter::update()
+void LangInterpreter::update(vector<string> _gridstate)
 {
     if(current==EscapeMode::CURL)
     {
         cout << "curl detected" << endl;
     }
+    gridstate = _gridstate;
+    this->parser();
 }
