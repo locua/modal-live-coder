@@ -26,6 +26,7 @@ private:
     ofTrueTypeFont font;
     string symbols;
     string chars_;
+    vector<string> gridstate;
 };
 
 #endif // GRIDSHEET_H

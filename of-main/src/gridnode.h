@@ -15,6 +15,7 @@ public:
     void receiveFont(ofTrueTypeFont);
     void changesymbol(int);
     //void getsymbols(string&);
+    string getsymboli();
 private:
     bool nodeActive;
     int id;

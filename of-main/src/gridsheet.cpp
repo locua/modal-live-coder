@@ -27,6 +27,7 @@ Gridsheet::Gridsheet()
     for(Gridnode* n : gridnodes)
     {
         n->receiveFont(font);
+        gridstate.push_back("+");
     }
 }
 
@@ -36,7 +37,6 @@ Gridsheet::~Gridsheet()
     for(Gridnode* n : gridnodes)
     {
         delete n;
-
     }
     cout << "nodes deleted" << endl;
 }
@@ -92,10 +92,21 @@ void Gridsheet::navigate(int key)
         sender.sendMessage(message0, false);
     }
 //    cout << key << endl;
-    if(key!=57359 || key!=57357 || key!=57358 || key!=57356)
+    if(key!=57359 && key!=57357 && key!=57358 && key!=57356)
     {
         gridnodes[activeNode]->changesymbol(key);
-        cout << char(key) << endl;
+        activeNode++;
+        //cout << key << endl;
+    }
+
+    // print gridstate
+    if(key==32)
+    {
+        for(int i = 0; i < gridstate.size(); ++i)
+        {
+            cout << gridstate[i];
+        }
+        cout << ' ' << endl;
     }
 }
 
@@ -107,6 +118,6 @@ void Gridsheet::update()
     {
         // updates the active node so it can check whether it is active
         gridnodes[i]->update(activeNode);
+        gridstate[i] = gridnodes[i]->getsymboli();
     }
-
 }

@@ -18,7 +18,6 @@ ofxOscMessage Gridnode::returnMessage()
 
 void Gridnode::changesymbol(int key)
 {
-    //cout << char(key) << endl;
     symboli = char(key);
 }
 
@@ -59,3 +58,7 @@ void Gridnode::receiveFont(ofTrueTypeFont f)
     font = f;
 }
 
+string Gridnode::getsymboli()
+{
+    return symboli;
+}
