@@ -537,7 +537,9 @@ obj/linux64/Release/src/gridsheet.o: \
  /home/locu/of_v20190324_linux64gcc6_release/addons/ofxOsc/src/ofxOscReceiver.h \
  /home/locu/of_v20190324_linux64gcc6_release/addons/ofxOsc/libs/oscpack/src/osc/OscPacketListener.h \
  /home/locu/of_v20190324_linux64gcc6_release/addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.h \
- /home/locu/of_v20190324_linux64gcc6_release/addons/ofxOsc/libs/oscpack/src/osc/../ip/PacketListener.h
+ /home/locu/of_v20190324_linux64gcc6_release/addons/ofxOsc/libs/oscpack/src/osc/../ip/PacketListener.h \
+ /home/locu/of_v20190324_linux64gcc6_release/apps/myApps/of-main/src/langinterpreter.h \
+ /home/locu/of_v20190324_linux64gcc6_release/apps/myApps/of-main/src/language.h
 
 /home/locu/of_v20190324_linux64gcc6_release/apps/myApps/of-main/src/gridsheet.h:
 
@@ -1646,3 +1648,7 @@ obj/linux64/Release/src/gridsheet.o: \
 /home/locu/of_v20190324_linux64gcc6_release/addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.h:
 
 /home/locu/of_v20190324_linux64gcc6_release/addons/ofxOsc/libs/oscpack/src/osc/../ip/PacketListener.h:
+
+/home/locu/of_v20190324_linux64gcc6_release/apps/myApps/of-main/src/langinterpreter.h:
+
+/home/locu/of_v20190324_linux64gcc6_release/apps/myApps/of-main/src/language.h:

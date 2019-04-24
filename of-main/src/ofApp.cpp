@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+    auto start = chrono::high_resolution_clock::now();
     /* sound setup */
     sampleRate = 44100;
     bufferSize = 512;
@@ -22,17 +22,22 @@ void ofApp::setup(){
     bass.load("data/samples/bass.wav");
 
 
-    hit = {1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0};
-    highhit ={1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-    basshit = {0, 1, 0, 1, 0, 1 , 0, 1, 0, 1, 0, 1, 0, 1, 0, 0};
-    snarehit = {0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1};
-
-
+    hit = {1, 0, 0, 0};
+    highhit = {0}; // ={1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    basshit = {0}; // {0, 1, 0, 1, 0, 1 , 0, 1, 0, 1, 0, 1, 0, 1, 0, 0};
+    snarehit = {0}; //= {0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1};
 
     env0.setAttack(300);
     env0.setDecay(100);
     env0.setSustain(100);
     env0.setRelease(400);
+
+    auto finish = chrono::high_resolution_clock::now();
+
+    chrono::duration<double> elapsed = finish - start;
+    cout << elapsed.count() << endl;
+
+
 }
 
 //--------------------------------------------------------------
@@ -101,20 +106,7 @@ void ofApp::keyPressed(int key){
     if(key=='k') kicktrigger=1;
     if(key=='b') basstrigger=1;
     if(key=='s') synthtrigger=1;
-
 }
-
-//string AsciiIntToString( std::vector<int> const& ascii_ints )
-//{
-//    string ret_val;
-//    vector<int>:: const_iterator it = ascii_ints. begin ();
-//    for ( ; it != ascii_ints. end (); ++it ) {
-//        if ( *it < 0 || *it > 255) throw std::exception ("Invalid ASCII code");
-//        ret_val += static_cast<char>(*it);
-//    }
-//    return ret_val;
-//}
-
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
 

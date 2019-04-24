@@ -24,8 +24,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     void audioOut(ofSoundBuffer& buffer);
-
-    // interface control stuff
+       // interface control stuff
     Gridsheet grid;
     ofTrueTypeFont font;
     string chars =  string("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVB NM1234567890");

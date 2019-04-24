@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "language.h"
 
-enum class EscapeMode {NONE, CURL, PAREN};
+enum class EscapeMode {NONE, CURL, PAREN, RAND};
 
 class LangInterpreter
 {
@@ -12,9 +12,14 @@ public:
     ~LangInterpreter();
     void parser();
     void update(vector<string> _gridstate);
-    EscapeMode current;
+    vector<EscapeMode> activeModes;
+    inline bool isInteger(const string& );
 private:
     vector<string> gridstate;
+    Language lang;
+    // vector to store instances of the random function
+    // and its relevant attributes
+    vector<vector<int>> randInstances{};
 };
 
 #endif // LANGINTERPRETER_H
