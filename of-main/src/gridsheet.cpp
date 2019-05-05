@@ -123,3 +123,8 @@ void Gridsheet::update()
     // run interpreter updating it with latest gridstates
     interpreter.update(gridstate);
 }
+
+vector<vector<int>> Gridsheet::getPatterns()
+{
+    return interpreter.getPatterns();
+}

@@ -14,6 +14,7 @@ public:
     void draw();
     void navigate(int);
     void update();
+    vector<vector<int>> getPatterns();
 private:
     int cols;
     int rows;

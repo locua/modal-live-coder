@@ -44,6 +44,8 @@ void LangInterpreter::parser()
                        unsigned int id = i;
                        unsigned int relatedSample = stoi(gridstate[i+1]);
                        vector<int> randomFunction = {id, relatedSample};
+                       vector<int> _pattern = lang.randomPattern();
+                       randomFunction.insert(randomFunction.end(), _pattern.begin(), _pattern.end());
                        randInstances.push_back(randomFunction);
                        //cout << "randInstances size: " << randInstances.size() << endl;
                     }
@@ -58,7 +60,10 @@ void LangInterpreter::parser()
                   unsigned int id = i;
                   unsigned int relatedSample = stoi(gridstate[i+1]);
                   vector<int> randomFunction = {id, relatedSample};
+                  vector<int> _pattern = lang.randomPattern();
+                  randomFunction.insert(randomFunction.end(), _pattern.begin(), _pattern.end());
                   randInstances.push_back(randomFunction);
+
                   //cout << "randInstances size: " << randInstances.size() << endl;
                }
            }
@@ -76,8 +81,6 @@ void LangInterpreter::parser()
    {
        // execute random function of the language
        EscapeMode emtemp = EscapeMode::RAND;
-       vector<int> pattern = lang.randomPattern(randInstances[i][1]);
-
        // logic to check if previous instances of r have been removed
        if(gridstate[randInstances[i][0]] != "r")
        {
@@ -85,14 +88,12 @@ void LangInterpreter::parser()
             randInstances.erase(randInstances.begin() + i);
             //cout << "rand instance " << randIntances.begin() + i << " has been deleted" << endl;
        }
-
    }
    // loop over g instance array
    for(int i = 0; i < gTicker.size(); i ++)
    {
        cout << "number " << i << " g is happening" << endl;
    }
-
 }
 
 void LangInterpreter::update(vector<string> _gridstate)
@@ -101,6 +102,11 @@ void LangInterpreter::update(vector<string> _gridstate)
     gridstate = _gridstate;
     // runs parse loop
     this->parser();
+}
+
+vector<vector<int>> LangInterpreter::getPatterns()
+{
+    return randInstances;
 }
 
 // Checks if string is an integer

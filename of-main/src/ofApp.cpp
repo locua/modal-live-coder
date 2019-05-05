@@ -16,16 +16,19 @@ void ofApp::setup(){
     soundSettings.numInputChannels = 0;
     soundStream.setup(soundSettings);
     /* load samples */
-    kick.load("data/samples/hk.wav");
-    snare.load("data/samples/sn.wav");
-    highhat.load("data/samples/oh.WAV");
-    bass.load("data/samples/bass.wav");
+//    kick.load("data/samples/hk.wav");
+//    snare.load("data/samples/sn.wav");
+//    highhat.load("data/samples/oh.WAV");
+//    bass.load("data/samples/bass.wav");
 
-
-    hit = {1, 0, 0, 0};
-    highhit = {0}; // ={1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-    basshit = {0}; // {0, 1, 0, 1, 0, 1 , 0, 1, 0, 1, 0, 1, 0, 1, 0, 0};
-    snarehit = {0}; //= {0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1};
+//    // hit sample id = 0
+//    hit = {0, 0, 0, 0};
+//    // highhit sample id = 1
+//    highhit = {0}; // ={1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+//    // basshit sample id = 2
+//    basshit = {0}; // {0, 1, 0, 1, 0, 1 , 0, 1, 0, 1, 0, 1, 0, 1, 0, 0};
+//    // snarehit sample id = 3
+//    snarehit = {0}; //= {0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1};
 
     env0.setAttack(300);
     env0.setDecay(100);
@@ -35,20 +38,67 @@ void ofApp::setup(){
     auto finish = chrono::high_resolution_clock::now();
 
     chrono::duration<double> elapsed = finish - start;
-    cout << elapsed.count() << endl;
+    //cout << elapsed.count() << endl;
 
 
+
+    /* Search through sample folder and retrieve file list and names
+     * */
+    DIR *dir;
+    struct dirent *ent;
+    if ((dir = opendir ("data/samples")) != NULL) {
+      /* retrieve all the files and directories within directory */
+      while ((ent = readdir (dir)) != NULL) {
+          // cout << ent->d_name << endl;
+          string filename = ent->d_name;
+          smatch m;
+          regex e1 (".wav");
+          regex e2 (".WAV");
+          if(std::regex_search(filename, m, e1) || std::regex_search(filename, m, e2))
+          {
+              cout << "sample found: " << filename << endl;
+              samplenames.push_back(filename);
+              ofxMaxiSample sample;
+              samples.push_back(sample);
+          }
+      }
+      closedir (dir);
+    } else {
+      /* could not open directory */
+      perror ("");
+    }
+
+    /* load samples from sample list */
+    for(int i = 0; i < samplenames.size(); i ++)
+    {
+        samples[i].load("data/samples/" + samplenames[i]);
+        cout << samplenames[i] << " loaded" << endl;
+        vector<int> patt = {0};
+        sampleTriggers.push_back(0);
+        samplePatterns.push_back(patt);
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     grid.update();
+    randompatterns = grid.getPatterns();
+
+    for(int i = 0; i < randompatterns.size(); ++i)
+    {
+        if(randompatterns[i][1]==0) // first argument is 0, ie sample 0
+        {
+            vector<int>::const_iterator start = randompatterns[i].begin() + 2;
+            vector<int>::const_iterator end = randompatterns[i].end();
+            vector<int> tmpvec(start, end);
+            hit = tmpvec;
+        }
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     grid.draw();
-
 }
 
 void ofApp::audioOut(ofSoundBuffer& buffer)
@@ -61,30 +111,43 @@ void ofApp::audioOut(ofSoundBuffer& buffer)
 
         if(currentCount)
         {
-            kicktrigger = hit[playHead%16];
-            snaretrigger = snarehit[playHead%16];
-            basstrigger = basshit[playHead%16];
-            hattrigger = highhit[playHead%16];
+//            kicktrigger = hit[playHead%16];
+//            snaretrigger = snarehit[playHead%16];
+//            basstrigger = basshit[playHead%16];
+//            hattrigger = highhit[playHead%16];
+            for(int j = 0; j < samplePatterns.size(); j ++)
+            {
+                sampleTriggers[j] = samplePatterns[j][playHead%16];
+            }
             playHead++;
             lastCount = 0;
-            //cout << "tick" << endl;
+            cout << "tick" << endl;
         }
 
-        if(kicktrigger==1) kick.trigger();
-        if(snaretrigger==1) snare.trigger();
-        if(basstrigger==1) bass.trigger();
-        if(hattrigger==1) highhat.trigger(); //cout << "trig" << endl;
-
+//        if(kicktrigger==1) kick.trigger();
+//        if(snaretrigger==1) snare.trigger();
+//        if(basstrigger==1) bass.trigger();
+//        if(hattrigger==1) highhat.trigger(); //cout << "trig" << endl;
+        for(int j = 0; j < sampleTriggers.size(); i ++)
+        {
+            if(sampleTriggers[j]==1) samples[j].trigger();
+        }
 
         // ouput buffer
         float speed_m = ofMap(mouseX, 0, ofGetWidth(), 0, 5);
         //float synth0 = filter0.lores(osc0.sinewave(300), mouseX, 2);
         double synth0 = osc0.sinewave(300);
-        double output = kick.playOnce(speed_m) +
-                highhat.playOnce() +
-                snare.playOnce() +
-                bass.playOnce(2) +
-                env0.adsr(synth0, synthtrigger);
+        /*double output =
+//                kick.playOnce(speed_m) +
+//                highhat.playOnce() +
+//                snare.playOnce() +
+//                bass.playOnce(2) +
+                env0.adsr(synth0, synthtrigger); */
+        double output;
+        for(int j = 0; j < samples.size(); j++)
+        {
+            output+=samples[j].playOnce();
+        }
         //double output = osc0.sinewave(osc1.sinewave(osc2.sinewave(0.1)*10)*880);
         buffer [i * buffer.getNumChannels()] = output*vol;
         buffer [i * buffer.getNumChannels() + 1] = output*vol;

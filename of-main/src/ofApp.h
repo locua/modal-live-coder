@@ -4,6 +4,8 @@
 #include "ofxOsc.h"
 #include "gridsheet.h"
 #include "ofxMaxim.h"
+#include <dirent.h>
+#include <regex>
 
 class ofApp : public ofBaseApp{
 
@@ -41,6 +43,10 @@ public:
     ofxMaxiSample snare;
     ofxMaxiSample highhat;
     ofxMaxiSample bass;
+    vector<string> samplenames;
+    vector<ofxMaxiSample> samples;
+    vector<vector<int>> samplePatterns;
+    vector<int> sampleTriggers;
     // envelopes
     maxiEnv env0;
     //ofxMaxiEnvelope env0;
@@ -57,5 +63,11 @@ public:
 
     std::vector<int> hit, snarehit, highhit, basshit;
     int currentCount,lastCount,playHead;
+
+    // Language patterns and functions
+
+    vector<vector<int>> randompatterns;
+
+
 
 };

@@ -8,7 +8,7 @@ public:
     Language();
     ~Language();
     vector<int> setSampleSequence(vector<int>);
-    vector<int> randomPattern(int sample);
+    vector<int> randomPattern();
 };
 
 #endif // LANGUAGE_H
