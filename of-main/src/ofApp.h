@@ -67,7 +67,5 @@ public:
     // Language patterns and functions
 
     vector<vector<int>> randompatterns;
-
-
-
+    int randomTicker;
 };
