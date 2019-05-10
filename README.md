@@ -20,6 +20,8 @@ r11r
 r01r 
 ```
 
+## Pattern function
+
 ```c
 // This would pass the given pattern to the sample 14
 p14p01010101000111p
