@@ -68,8 +68,8 @@ void ofApp::setup()
     cout << "number of samples: " << samples.size() << ", " << sampleTriggers.size() << ", " << samplePatterns.size() << endl;
 
     /* recording stuff */
-//    recorder.setup("test.wav");
-//    recorder.startRecording();
+    recorder.setup("../test.wav");
+    recorder.startRecording();
 }
 
 //--------------------------------------------------------------
@@ -99,7 +99,7 @@ void ofApp::update()
 void ofApp::draw()
 {
     grid.draw();
-    cout << randompatterns.size() << endl;
+    // cout << randompatterns.size() << endl;
 }
 
 void ofApp::audioOut(ofSoundBuffer& buffer)
@@ -109,17 +109,12 @@ void ofApp::audioOut(ofSoundBuffer& buffer)
         float vol = 0.4;
         // metronome that ticks 8 times a second
         currentCount = (int)timer.phasor(8);
-
+        // sequencing loop
         if(lastCount!=currentCount)
         {
             for(int j = 0; j < samplePatterns.size(); j ++)
             {
-//                samplePatterns[0] = {0,0,0,0,0,0,0,0,0,0};
-//                for(int x =0; x<samplePatterns[j].size(); x++)
-//                {
-//                    cout << samplePatterns[j][x];
-//                }
-                //cout << "" << endl;
+
                 sampleTriggers[j] = samplePatterns[j][playHead%16];
             }
             playHead++;
@@ -133,7 +128,7 @@ void ofApp::audioOut(ofSoundBuffer& buffer)
         // ouput buffer
         float speed_m = ofMap(mouseX, 0, ofGetWidth(), 0, 5);
         //float synth0 = filter0.lores(osc0.sinewave(300), mouseX, 2);
-        double synth0 = osc0.sinewave(300);
+        //double synth0 = osc0.sinewave(300);
         double output;
         if(samples.size()>0){
             output = samples[0].playOnce(1.0);
@@ -146,7 +141,7 @@ void ofApp::audioOut(ofSoundBuffer& buffer)
         buffer [i * buffer.getNumChannels()] = output*vol;
         buffer [i * buffer.getNumChannels() + 1] = output*vol;
         // pass output to recorder //
-        //recorder.passData(&buffer[i*buffer.getNumChannels()], buffer.getNumFrames());
+        recorder.passData(&buffer[i*buffer.getNumChannels()], buffer.getNumFrames());
 
         // set trigger to 0 at the end of each sample to guarantee retriggering.
         for(int j = 0; j < sampleTriggers.size(); j++)
@@ -163,7 +158,7 @@ void ofApp::keyPressed(int key){
 
     if(key=='k') sampleTriggers[0]=1;
     if(key=='b') sampleTriggers[1]=1;
-    if(key=='s') samplePatterns[0] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    //if(key=='s') samplePatterns[0] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 }
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key)
