@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 ofApp::~ofApp()
 {
-    recorder.stopRecording();
+//    recorder.stopRecording();
 }
 
 void ofApp::setup()
@@ -68,8 +68,8 @@ void ofApp::setup()
     cout << "number of samples: " << samples.size() << ", " << sampleTriggers.size() << ", " << samplePatterns.size() << endl;
 
     /* recording stuff */
-    recorder.setup("test.wav");
-    recorder.startRecording();
+//    recorder.setup("test.wav");
+//    recorder.startRecording();
 }
 
 //--------------------------------------------------------------
@@ -99,6 +99,7 @@ void ofApp::update()
 void ofApp::draw()
 {
     grid.draw();
+    cout << randompatterns.size() << endl;
 }
 
 void ofApp::audioOut(ofSoundBuffer& buffer)

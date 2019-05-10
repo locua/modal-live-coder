@@ -20,11 +20,14 @@ void LangInterpreter::parser()
    {
        /* This is a basic parsing setup to check for and instance of the r
         * function and checking to see if it has an argument */
-       if(gridstate[i]=="r")
+       if(gridstate[i]=="r" && gridstate[i+3]=="r")
        {
+
            // check if there is any random instances
            if(randInstances.size() > 0)
            {
+                // loop through array to check this random function has not already
+               // been added
                 int rcounter = 0;
                 for(int j = 0; j < randInstances.size(); j ++)
                 {
@@ -71,6 +74,7 @@ void LangInterpreter::parser()
                   /* push vector of ints into vector
                   // the first int is its id and index in the gridstate
                   // the second int is its first argument */
+
                    if(this->isInteger(gridstate[i+2])) // is there more than one digit
                    {
                        unsigned int id = i;
