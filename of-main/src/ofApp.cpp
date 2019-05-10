@@ -67,9 +67,9 @@ void ofApp::setup()
     }
     cout << "number of samples: " << samples.size() << ", " << sampleTriggers.size() << ", " << samplePatterns.size() << endl;
 
-    /* recording stuff */
-    recorder.setup("../test.wav");
-    recorder.startRecording();
+//    /* recording stuff */
+//    recorder.setup("../test.wav");
+//    recorder.startRecording();
 }
 
 //--------------------------------------------------------------
@@ -77,6 +77,7 @@ void ofApp::update()
 {
     grid.update();
     randompatterns = grid.getPatterns();
+    patternPatterns = grid.getPatternFunctions();
     for(int i = 0; i < samplePatterns.size();i++)
     {
         samplePatterns[i]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -86,6 +87,20 @@ void ofApp::update()
             {
                 vector<int>::const_iterator first = randompatterns[j].begin() + 2;
                 vector<int>::const_iterator last = randompatterns[j].end();
+                vector<int> tmpvec(first, last);
+                samplePatterns[i]=tmpvec;
+            }
+        }
+    }
+
+    for(int i = 0; i <samplePatterns.size(); i++)
+    {
+        for(int j = 0; j < patternPatterns.size(); j ++)
+        {
+            if(patternPatterns[j][1]==i)
+            {
+                vector<int>::const_iterator first = patternPatterns[j].begin() + 2;
+                vector<int>::const_iterator last = patternPatterns[j].end();
                 vector<int> tmpvec(first, last);
                 samplePatterns[i]=tmpvec;
             }
@@ -126,7 +141,6 @@ void ofApp::audioOut(ofSoundBuffer& buffer)
             if(sampleTriggers[j]==1) samples[j].trigger();
         }
         // ouput buffer
-        float speed_m = ofMap(mouseX, 0, ofGetWidth(), 0, 5);
         //float synth0 = filter0.lores(osc0.sinewave(300), mouseX, 2);
         //double synth0 = osc0.sinewave(300);
         double output;
@@ -141,7 +155,7 @@ void ofApp::audioOut(ofSoundBuffer& buffer)
         buffer [i * buffer.getNumChannels()] = output*vol;
         buffer [i * buffer.getNumChannels() + 1] = output*vol;
         // pass output to recorder //
-        recorder.passData(&buffer[i*buffer.getNumChannels()], buffer.getNumFrames());
+        //recorder.passData(&buffer[i*buffer.getNumChannels()], buffer.getNumFrames());
 
         // set trigger to 0 at the end of each sample to guarantee retriggering.
         for(int j = 0; j < sampleTriggers.size(); j++)

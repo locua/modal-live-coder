@@ -133,3 +133,9 @@ vector<vector<int>> Gridsheet::getPatterns()
 {
     return interpreter.getPatterns();
 }
+
+vector<vector<int>> Gridsheet::getPatternFunctions()
+{
+    return interpreter.getPatternFunctions();
+}
+

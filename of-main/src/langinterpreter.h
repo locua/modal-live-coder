@@ -15,13 +15,15 @@ public:
     vector<EscapeMode> activeModes;
     inline bool isInteger(const string& );
     vector<vector<int>> getPatterns();
+    vector<vector<int>> getPatternFunctions();
+
 private:
     vector<string> gridstate;
     Language lang;
     // vector to store instances of the random function
     // and its relevant attributes
     vector<vector<int>> randInstances{};
-    vector<vector<int>> patterns{};
+    vector<vector<int>> patternInstances{};
 };
 
 #endif // LANGINTERPRETER_H

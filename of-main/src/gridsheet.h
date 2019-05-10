@@ -15,6 +15,8 @@ public:
     void navigate(int);
     void update();
     vector<vector<int>> getPatterns();
+    vector<vector<int>> getPatternFunctions();
+
 private:
     int cols;
     int rows;

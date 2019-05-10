@@ -99,10 +99,88 @@ void LangInterpreter::parser()
            }
 
        }
-       //cout << randInstances.size() << endl;
-       // Check for Pattern function
+       /* Check for Pattern function
+        * This function allows you to choose when the sample is banged
+        * by defining a pattern of 0's and 1's for the sample to played back in
+        */
        if(gridstate[i]=="p")
        {
+           if(patternInstances.size()>0)
+           {
+               // loop through array to check this pattern function has not already
+               // been added
+               int pcounter = 0;
+               for(int j = 0; j < patternInstances.size(); j ++)
+               {
+                   // check p has not already been added
+                   if(patternInstances[j][0] == i)
+                   {
+                       pcounter ++;
+                   }
+               }
+               if(pcounter==0)
+               {
+                    // ie a pattern function at this index has not already been added
+                    if(gridstate[i+3]=="p")
+                    {
+                        if(this->isInteger(gridstate[i+1]) && this->isInteger(gridstate[i+2]))
+                        {
+                            // "we have a pattern function baby"
+                            int id = i;
+                            int units = stoi(gridstate[i+2]);
+                            int tens = stoi(gridstate[i+1]);
+                            int sampleId = units +(10*tens);
+                            vector<int> patternFunction{id, sampleId};
+                            for(int z = 0; z < 16; z++)
+                            {
+                                if(gridstate[i+4+z]=="p")
+                                {
+                                    for(int q = 0; q <(i+4+z); q++)
+                                    {
+                                        if(this->isInteger(gridstate[q])) patternFunction.push_back(stoi(gridstate[q]));
+                                    }
+                                } else
+                                {
+                                    patternFunction.push_back(0);
+                                }
+                            }
+                            patternInstances.push_back(patternFunction);
+                        }
+                    }
+
+               }
+           } else {
+               /* add first pattern function instance */
+               if(gridstate[i+3]=="p")
+               {
+                   if(this->isInteger(gridstate[i+1]) && this->isInteger(gridstate[i+2]))
+                   {
+                       int id = i;
+                       int units = stoi(gridstate[i+2]);
+                       int tens = stoi(gridstate[i+1]);
+                       int sampleId = units +(10*tens);
+
+                       for(int z = 0; z < 16; z++)
+                       {
+                           if(gridstate[i+4+z]=="p")
+                           {
+                               cout << "third p detected" << endl;
+                               vector<int> patternFunction{id, sampleId};
+                               for(int q = 0; q <(i+4+z); q++)
+                               {
+                                   if(this->isInteger(gridstate[q]))
+                                   {
+                                       patternFunction.push_back(stoi(gridstate[q]));
+                                   } else {
+                                       patternFunction.push_back(0);
+                                   }
+                               }
+                               patternInstances.push_back(patternFunction);
+                           }
+                       }
+                   }
+               }
+           }
 
        }
    }
@@ -114,6 +192,16 @@ void LangInterpreter::parser()
        {
            // deletes removed r instance from array
             randInstances.erase(randInstances.begin() + i);
+            //cout << "rand instance " << randIntances.begin() + i << " has been deleted" << endl;
+       }
+   }
+   for(int i = 0; i < patternInstances.size(); i ++)
+   {
+       // logic to check if previous instances of r have been removed
+       if(gridstate[patternInstances[i][0]] != "p" || gridstate[patternInstances[i][0]+3]!="p")
+       {
+           // deletes removed r instance from array
+            patternInstances.erase(patternInstances.begin() + i);
             //cout << "rand instance " << randIntances.begin() + i << " has been deleted" << endl;
        }
    }
@@ -130,6 +218,10 @@ void LangInterpreter::update(vector<string> _gridstate)
 vector<vector<int>> LangInterpreter::getPatterns()
 {
     return randInstances;
+}
+vector<vector<int>> LangInterpreter::getPatternFunctions()
+{
+    return patternInstances;
 }
 
 // Checks if string is an integer

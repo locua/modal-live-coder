@@ -68,6 +68,8 @@ public:
     // Language patterns and functions
 
     vector<vector<int>> randompatterns;
+    vector<vector<int>> patternPatterns; // lol great name
+
     vector<int> randomTicker;
 
     maxiRecorder recorder;
