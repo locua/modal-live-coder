@@ -10,6 +10,7 @@
 class ofApp : public ofBaseApp{
 
 public:
+    ~ofApp();
     void setup();
     void update();
     void draw();
@@ -67,5 +68,7 @@ public:
     // Language patterns and functions
 
     vector<vector<int>> randompatterns;
-    int randomTicker;
+    vector<int> randomTicker;
+
+    maxiRecorder recorder;
 };

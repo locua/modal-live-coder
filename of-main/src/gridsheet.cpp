@@ -84,7 +84,12 @@ void Gridsheet::navigate(int key)
        //cout << "down" << endl;
        activeNode += cols;
     }
-
+    // BACKSPACE
+    if(key==8)
+    {
+        activeNode--;
+        gridnodes[activeNode]->changesymbol('+');
+    }
     if(key==13)
     {
         ofxOscMessage message0;
@@ -92,7 +97,7 @@ void Gridsheet::navigate(int key)
         sender.sendMessage(message0, false);
     }
 //    cout << key << endl;
-    if(key!=57359 && key!=57357 && key!=57358 && key!=57356)
+    if(key!=57359 && key!=57357 && key!=57358 && key!=57356 && key !=8)
     {
         gridnodes[activeNode]->changesymbol(key);
         activeNode++;
@@ -100,14 +105,14 @@ void Gridsheet::navigate(int key)
     }
 
     // print gridstate
-    if(key==32)
-    {
-        for(int i = 0; i < gridstate.size(); ++i)
-        {
-            cout << gridstate[i];
-        }
-        cout << ' ' << endl;
-    }
+//    if(key==32)
+//    {
+//        for(int i = 0; i < gridstate.size(); ++i)
+//        {
+//            cout << gridstate[i];
+//        }
+//        cout << ' ' << endl;
+//    }
 }
 
 

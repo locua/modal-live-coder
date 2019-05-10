@@ -38,16 +38,30 @@ void LangInterpreter::parser()
                 {
                     if(this->isInteger(gridstate[i+1]))
                     {
+                       /* Push random function into array
                        /* push vector of ints into vector
-                       // the first int is its id and index in the gridstate
-                       // the second int is its first argument */
-                       unsigned int id = i;
-                       unsigned int relatedSample = stoi(gridstate[i+1]);
-                       vector<int> randomFunction = {id, relatedSample};
-                       vector<int> _pattern = lang.randomPattern();
-                       randomFunction.insert(randomFunction.end(), _pattern.begin(), _pattern.end());
-                       randInstances.push_back(randomFunction);
-                       //cout << "randInstances size: " << randInstances.size() << endl;
+                       /* the first int is its id and index in the gridstate
+                       /* the second int is its first argument */
+                       if(this->isInteger(gridstate[i+2])) // is there more than one digit
+                       {
+                           unsigned int id = i;
+                           unsigned int units = stoi(gridstate[i+1]);
+                           unsigned int tens = stoi(gridstate[i+2]);
+                           unsigned int relatedSample = units + 10*tens;
+                           vector<int> randomFunction = {id, relatedSample};
+                           vector<int> _pattern = lang.randomPattern();
+                           randomFunction.insert(randomFunction.end(), _pattern.begin(), _pattern.end());
+                           randInstances.push_back(randomFunction);
+                           //cout << "randInstances size: " << randInstances.size() << endl;
+                       } else { // only one digit
+                           unsigned int id = i;
+                           unsigned int relatedSample = stoi(gridstate[i+1]);
+                           vector<int> randomFunction = {id, relatedSample};
+                           vector<int> _pattern = lang.randomPattern();
+                           randomFunction.insert(randomFunction.end(), _pattern.begin(), _pattern.end());
+                           randInstances.push_back(randomFunction);
+                           //cout << "randInstances size: " << randInstances.size() << endl;
+                       }
                     }
                 }
            } else {
@@ -57,14 +71,26 @@ void LangInterpreter::parser()
                   /* push vector of ints into vector
                   // the first int is its id and index in the gridstate
                   // the second int is its first argument */
-                  unsigned int id = i;
-                  unsigned int relatedSample = stoi(gridstate[i+1]);
-                  vector<int> randomFunction = {id, relatedSample};
-                  vector<int> _pattern = lang.randomPattern();
-                  randomFunction.insert(randomFunction.end(), _pattern.begin(), _pattern.end());
-                  randInstances.push_back(randomFunction);
-
-                  //cout << "randInstances size: " << randInstances.size() << endl;
+                   if(this->isInteger(gridstate[i+2])) // is there more than one digit
+                   {
+                       unsigned int id = i;
+                       unsigned int units = stoi(gridstate[i+1]);
+                       unsigned int tens = stoi(gridstate[i+2]);
+                       unsigned int relatedSample = units + 10*tens;
+                       vector<int> randomFunction = {id, relatedSample};
+                       vector<int> _pattern = lang.randomPattern();
+                       randomFunction.insert(randomFunction.end(), _pattern.begin(), _pattern.end());
+                       randInstances.push_back(randomFunction);
+                       //cout << "randInstances size: " << randInstances.size() << endl;
+                   } else { // only one digit
+                       unsigned int id = i;
+                       unsigned int relatedSample = stoi(gridstate[i+1]);
+                       vector<int> randomFunction = {id, relatedSample};
+                       vector<int> _pattern = lang.randomPattern();
+                       randomFunction.insert(randomFunction.end(), _pattern.begin(), _pattern.end());
+                       randInstances.push_back(randomFunction);
+                       //cout << "randInstances size: " << randInstances.size() << endl;
+                   }
                }
            }
 
@@ -79,8 +105,6 @@ void LangInterpreter::parser()
    // loop over rand instance array and
    for(int i = 0; i < randInstances.size(); i ++)
    {
-       // execute random function of the language
-       EscapeMode emtemp = EscapeMode::RAND;
        // logic to check if previous instances of r have been removed
        if(gridstate[randInstances[i][0]] != "r")
        {

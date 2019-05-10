@@ -1,6 +1,11 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
+ofApp::~ofApp()
+{
+    recorder.stopRecording();
+}
+
 void ofApp::setup()
 {
     auto start = chrono::high_resolution_clock::now();
@@ -55,11 +60,16 @@ void ofApp::setup()
     {
         samples[i].load("data/samples/" + samplenames[i]);
         cout << samplenames[i] << " loaded" << endl;
-        vector<int> patt = {0};
         sampleTriggers.push_back(0);
+        vector<int> patt = {0};
         samplePatterns.push_back(patt);
+        randomTicker.push_back(0);
     }
     cout << "number of samples: " << samples.size() << ", " << sampleTriggers.size() << ", " << samplePatterns.size() << endl;
+
+    /* recording stuff */
+    recorder.setup("test.wav");
+    recorder.startRecording();
 }
 
 //--------------------------------------------------------------
@@ -67,24 +77,23 @@ void ofApp::update()
 {
     grid.update();
     randompatterns = grid.getPatterns();
-
-    for(int i = 0; i < randompatterns.size(); i++)
+    for(int i = 0; i < samplePatterns.size();i++)
     {
-
-        if(randompatterns[i][1]==j) // first argument is 0, ie sample 0
+        samplePatterns[i]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        for(int j = 0; j < randompatterns.size(); j ++)
         {
-            vector<int>::const_iterator start = randompatterns[i].begin() + 2;
-            vector<int>::const_iterator end = randompatterns[i].end();
-            vector<int> tmpvec(start, end);
-            samplePatterns[j] = tmpvec;
-        } else {
-            samplePatterns[j] = {0};
-            cout << "" << endl;
+            if(randompatterns[j][1]==i)
+            {
+                vector<int>::const_iterator first = randompatterns[j].begin() + 2;
+                vector<int>::const_iterator last = randompatterns[j].end();
+                vector<int> tmpvec(first, last);
+                samplePatterns[i]=tmpvec;
+            }
         }
     }
-
-//    cout << randompatterns.size() << endl;
 }
+
+
 
 //--------------------------------------------------------------
 void ofApp::draw()
@@ -104,6 +113,12 @@ void ofApp::audioOut(ofSoundBuffer& buffer)
         {
             for(int j = 0; j < samplePatterns.size(); j ++)
             {
+//                samplePatterns[0] = {0,0,0,0,0,0,0,0,0,0};
+//                for(int x =0; x<samplePatterns[j].size(); x++)
+//                {
+//                    cout << samplePatterns[j][x];
+//                }
+                //cout << "" << endl;
                 sampleTriggers[j] = samplePatterns[j][playHead%16];
             }
             playHead++;
@@ -114,22 +129,23 @@ void ofApp::audioOut(ofSoundBuffer& buffer)
         {
             if(sampleTriggers[j]==1) samples[j].trigger();
         }
-
         // ouput buffer
         float speed_m = ofMap(mouseX, 0, ofGetWidth(), 0, 5);
         //float synth0 = filter0.lores(osc0.sinewave(300), mouseX, 2);
         double synth0 = osc0.sinewave(300);
         double output;
         if(samples.size()>0){
-            output = samples[0].playOnce();
+            output = samples[0].playOnce(1.0);
             for(int j = 1; j < samples.size(); j ++)
             {
-                output += samples[j].playOnce();
+                output += samples[j].playOnce(1.0);
             }
         }
         //double output = osc0.sinewave(osc1.sinewave(osc2.sinewave(0.1)*10)*880);
         buffer [i * buffer.getNumChannels()] = output*vol;
         buffer [i * buffer.getNumChannels() + 1] = output*vol;
+        // pass output to recorder //
+        //recorder.passData(&buffer[i*buffer.getNumChannels()], buffer.getNumFrames());
 
         // set trigger to 0 at the end of each sample to guarantee retriggering.
         for(int j = 0; j < sampleTriggers.size(); j++)
@@ -146,7 +162,7 @@ void ofApp::keyPressed(int key){
 
     if(key=='k') sampleTriggers[0]=1;
     if(key=='b') sampleTriggers[1]=1;
-    if(key=='s') sampleTriggers[2]=1;
+    if(key=='s') samplePatterns[0] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 }
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key)
@@ -169,7 +185,14 @@ void ofApp::mouseDragged(int x, int y, int button)
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button)
 {
-
+    for(int i = 0; i < samplePatterns.size(); i++)
+    {
+        for(int j =0; j < samplePatterns[i].size(); j++)
+        {
+            cout << samplePatterns[i][j];
+        }
+        cout << "" << endl;
+    }
 }
 
 //--------------------------------------------------------------
