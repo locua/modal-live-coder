@@ -48,8 +48,8 @@ void LangInterpreter::parser()
                        if(this->isInteger(gridstate[i+2])) // is there more than one digit
                        {
                            unsigned int id = i;
-                           unsigned int units = stoi(gridstate[i+1]);
-                           unsigned int tens = stoi(gridstate[i+2]);
+                           unsigned int tens = stoi(gridstate[i+1]);
+                           unsigned int units = stoi(gridstate[i+2]);
                            unsigned int relatedSample = units + 10*tens;
                            vector<int> randomFunction = {id, relatedSample};
                            vector<int> _pattern = lang.randomPattern();
@@ -100,10 +100,10 @@ void LangInterpreter::parser()
 
        }
        //cout << randInstances.size() << endl;
-       // detect g
-       if(gridstate[i]=="g")
+       // Check for Pattern function
+       if(gridstate[i]=="p")
        {
-           gTicker.push_back(1);
+
        }
    }
    // loop over rand instance array and
@@ -116,11 +116,6 @@ void LangInterpreter::parser()
             randInstances.erase(randInstances.begin() + i);
             //cout << "rand instance " << randIntances.begin() + i << " has been deleted" << endl;
        }
-   }
-   // loop over g instance array
-   for(int i = 0; i < gTicker.size(); i ++)
-   {
-       cout << "number " << i << " g is happening" << endl;
    }
 }
 
