@@ -19,3 +19,9 @@ r11r
 // This would play a random pattern of sample 1
 r01r 
 ```
+
+```c
+// This would pass the given pattern to the sample 14
+p14p01010101000111p
+
+```
