@@ -1,6 +1,6 @@
 # finalproject2k19
 
-final project various mini projects and bits and bobs
+Modal live coding experiment. An experimental modal live coding environment. Currently failing. 
 
 Tested on ubuntu linux. It should work on windows to if ofxMaxim is working. On Windows the code may have to be edited in the ofApp.cpp file to give change all references to file paths to the absolute directorys (eg. C://User/), this may be the case on Mac OS too.
 
